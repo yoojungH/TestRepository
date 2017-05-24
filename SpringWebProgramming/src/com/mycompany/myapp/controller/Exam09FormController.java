@@ -84,7 +84,7 @@ public class Exam09FormController {
 			//System.out.println(encodingFileName);
 		} else {
 			encodingFileName = new String(fileName.getBytes("UTF-8"), "ISO-8859-1");
-			System.out.println(encodingFileName);
+			//System.out.println(encodingFileName);
 		}
 
 		response.addHeader("Content-Disposition", "attachment; filename=\"" + encodingFileName + "\"");
