@@ -4,7 +4,11 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/D:/IoTCourse/GitRepository/TestRepository/Hardware/src/test/ButtonRgbTest.java</file>
+            <file>file:/D:/IoTCourse/GitRepository/TestRepository/Hardware/src/hardware/motor/PCA9685.java</file>
+            <file>file:/D:/IoTCourse/GitRepository/TestRepository/Hardware/src/hardware/motor/SG90Servo.java</file>
             <file>file:/D:/IoTCourse/GitRepository/TestRepository/Hardware/src/hardware/sensor/FlameSensor.java</file>
+            <file>file:/D:/IoTCourse/GitRepository/TestRepository/Hardware/src/hardware/sensor/GasSensor.java</file>
+            <file>file:/D:/IoTCourse/GitRepository/TestRepository/Hardware/src/test/GasSensorBuzzerDualLedServoMotorTest.java</file>
             <file>file:/D:/IoTCourse/GitRepository/TestRepository/Hardware/src/hardware/led/RgbLedDigital.java</file>
             <file>file:/D:/IoTCourse/GitRepository/TestRepository/Hardware/src/test/ThermistorSensorBuzzerTest.java</file>
             <file>file:/D:/IoTCourse/GitRepository/TestRepository/Hardware/src/hardware/sensor/ThermistorSensor.java</file>
