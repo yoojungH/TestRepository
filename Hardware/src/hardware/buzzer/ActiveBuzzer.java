@@ -6,7 +6,7 @@ import com.pi4j.io.gpio.GpioPinDigitalOutput;
 import com.pi4j.io.gpio.Pin;
 import com.pi4j.io.gpio.PinState;
 import com.pi4j.io.gpio.RaspiPin;
-//3.5v
+//3.3v
 public class ActiveBuzzer {
 	//Field
 	private GpioPinDigitalOutput buzzerPin;

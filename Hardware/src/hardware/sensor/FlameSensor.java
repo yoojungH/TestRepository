@@ -9,7 +9,7 @@ import com.pi4j.io.gpio.RaspiPin;
 import com.pi4j.io.gpio.event.GpioPinDigitalStateChangeEvent;
 import com.pi4j.io.gpio.event.GpioPinListenerDigital;
 import hardware.converter.PCF8591;
-//3.5V
+//3.3V
 
 public class FlameSensor {
 
@@ -18,10 +18,10 @@ public class FlameSensor {
 	private GpioPinDigitalInput gpioPinDigitalInput;
 
 	//Contructor
-	public FlameSensor(PCF8591 pcf8591, Pin alarmNo) {
+	public FlameSensor(PCF8591 pcf8591, Pin digitalPinNo) {
 		this.pcf8591 = pcf8591;
 		GpioController gpioController = GpioFactory.getInstance();
-		gpioPinDigitalInput = gpioController.provisionDigitalInputPin(alarmNo);
+		gpioPinDigitalInput = gpioController.provisionDigitalInputPin(digitalPinNo);
 		gpioPinDigitalInput.setShutdownOptions(true, PinState.LOW);
 	}
 

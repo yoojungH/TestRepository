@@ -1,7 +1,7 @@
 package hardware.sensor;
 
 import hardware.converter.PCF8591;
-//3.5V
+//3.3V
 public class ThermistorSensor {
 	//Field
 	private PCF8591 pcf8591;
