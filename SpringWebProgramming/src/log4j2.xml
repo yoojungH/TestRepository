@@ -4,7 +4,7 @@
 	<!-- 로그를 어디에 출력할 것인가를 설정 -->
 	<Appenders>
 		<Console name="Console" target="SYSTEM_OUT">
-			<PatternLayout pattern="%d{HH:mm:ss} [%t] %-5level %logger{2} %M() - %msg%n" />
+			<PatternLayout pattern="%d{HH:mm:ss} %-5level %logger{2} %M() - %msg%n" />
 		</Console>
 	</Appenders>
 

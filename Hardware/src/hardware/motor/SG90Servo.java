@@ -43,15 +43,26 @@ public class SG90Servo {
 		this.angle = angle;
 		int step = (int)(minStep + (angle*(maxStep-minStep)/180.0));
 		pin.setPwm(step);
-	}
+	} 
 	
 	public static void main(String[] args) throws InterruptedException {
-		SG90Servo test = new SG90Servo (RaspiPin.GPIO_01, 8, 25);
+		SG90Servo test = new SG90Servo (RaspiPin.GPIO_01, 8, 24);
+		
+		/*
 		for(int i=0; i<=180; i+=10){
 			test.setAngle(i);
 			Thread.sleep(500);
 		}
+		*/
 		test.setAngle(0);
 		Thread.sleep(1000);
+		
+//		test.setAngle(90);
+//		Thread.sleep(1000);
+//		
+//		test.setAngle(180);
+//		Thread.sleep(1000);
+		
+		
 	}
 }

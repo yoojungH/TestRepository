@@ -2,12 +2,21 @@ package com.mycompany.myapp.dto;
 
 import java.util.Date;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class Board {
 	private int bno;
 	private String btitle;
 	private String bcontent;
 	private String bwriter;
 	private Date bdate;
+	private String bpassword;
+	private int bhitcount;
+	private String boriginalfilename;
+	private String bsavedfilename;
+	private String bfilecontent;
+	private MultipartFile battach;
+	
 
 	public int getBno() {
 		return bno;
@@ -25,6 +34,46 @@ public class Board {
 		this.btitle = btitle;
 	}
 
+	public String getBpassword() {
+		return bpassword;
+	}
+
+	public void setBpassword(String bpassword) {
+		this.bpassword = bpassword;
+	}
+
+	public int getBhitcount() {
+		return bhitcount;
+	}
+
+	public void setBhitcount(int bhitcount) {
+		this.bhitcount = bhitcount;
+	}
+
+	public String getBoriginalfilename() {
+		return boriginalfilename;
+	}
+
+	public void setBoriginalfilename(String boriginalfilename) {
+		this.boriginalfilename = boriginalfilename;
+	}
+
+	public String getBsavedfilename() {
+		return bsavedfilename;
+	}
+
+	public void setBsavedfilename(String bsavedfilename) {
+		this.bsavedfilename = bsavedfilename;
+	}
+
+	public String getBfilecontent() {
+		return bfilecontent;
+	}
+
+	public void setBfilecontent(String bfilecontent) {
+		this.bfilecontent = bfilecontent;
+	}
+	
 	public String getBcontent() {
 		return bcontent;
 	}
@@ -48,4 +97,13 @@ public class Board {
 	public void setBdate(Date bdate) {
 		this.bdate = bdate;
 	}
+	
+	public MultipartFile getBattach() {
+		return battach;
+	}
+
+	public void setBattach(MultipartFile battach) {
+		this.battach = battach;
+	}
+
 }

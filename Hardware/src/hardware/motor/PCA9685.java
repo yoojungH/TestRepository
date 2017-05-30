@@ -116,14 +116,17 @@ public class PCA9685 {
 //		Thread.sleep(2000);
 
 		/* step으로 제어할 경우 */
+		while(true){
 		//0도로 회전
 		pca9685.setStep(PWM_00, 164);
-		Thread.sleep(2000);
+		Thread.sleep(1000);
 		//90도로 회전
-		pca9685.setStep(PWM_00, 358);
-		Thread.sleep(2000);
+		pca9685.setStep(PWM_00, 345);
+		Thread.sleep(1000);
 		//180도로 회전
-		pca9685.setStep(PWM_00, 552);
-		Thread.sleep(2000);
+		pca9685.setStep(PWM_00, 520);
+		Thread.sleep(1000);
+	
+		}
 	}
 }
