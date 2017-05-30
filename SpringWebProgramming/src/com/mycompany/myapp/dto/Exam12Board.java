@@ -4,7 +4,7 @@ import java.util.Date;
 
 import org.springframework.web.multipart.MultipartFile;
 
-public class Board {
+public class Exam12Board {
 	private int bno;
 	private String btitle;
 	private String bcontent;

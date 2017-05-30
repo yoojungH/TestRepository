@@ -88,6 +88,7 @@
 		<h4>글쓰기</h4>
 		<a href ="jdbc/exam01" class="btn btn-primary">게시물 쓰기</a>
 		<a href ="jdbc/exam02" class="btn btn-primary">게시물 쓰기</a>
+		<a href ="jdbc/exam03" class="btn btn-primary">회원 가입</a>
 
 	</body>
 </html>
