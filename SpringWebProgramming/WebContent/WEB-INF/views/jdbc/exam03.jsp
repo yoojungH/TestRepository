@@ -22,7 +22,7 @@
 <body>
 	<h4>회원 가입</h4>
 	<hr />
-	<form method="post" action="exam03" style="padding: 0px 20px"
+	<form method="post" action="exam03" style="padding: 0px 20px;"
 		enctype="multipart/form-data">
 		<div class="form-group">
 			<div class="input-group">
