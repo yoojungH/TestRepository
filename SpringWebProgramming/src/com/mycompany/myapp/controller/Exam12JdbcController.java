@@ -146,6 +146,38 @@ public class Exam12JdbcController {
 		return "jdbc/exam05";
 	}
 	
+	@RequestMapping("/jdbc/exam06")
+	public String exam06(@RequestParam(defaultValue="1") int pageNo, Model model) {
+		int rowsPerPage = 5;
+		
+		int pagesPerGroup = 10;
+		
+		int totalRows = service.memberTotalRows();
+		
+		int totalPageNo = (totalRows/rowsPerPage)+((totalRows%rowsPerPage!= 0)?1:0);
+		
+		int totalGroupNo = (totalPageNo/pagesPerGroup)+((totalPageNo%pagesPerGroup!= 0)?1:0);
+		
+		int groupNo = (pageNo-1)/pagesPerGroup + 1;
+		
+		int startPageNo = (groupNo-1) * pagesPerGroup + 1;
+		
+		int endPageNo = startPageNo + pagesPerGroup - 1;
+		if(groupNo == totalGroupNo) {endPageNo = totalPageNo; }
+		
+		List<Exam12Member> list = service.memberListPage(pageNo, rowsPerPage);
+		model.addAttribute("list", list);
+		model.addAttribute("pagesPerGroup", pagesPerGroup);
+		model.addAttribute("totalPageNo", totalPageNo);
+		model.addAttribute("totalGroupNo", totalGroupNo);
+		model.addAttribute("groupNo", groupNo);
+		model.addAttribute("startPageNo", startPageNo);
+		model.addAttribute("endPageNo", endPageNo);
+		model.addAttribute("pageNo", pageNo);
+		
+		
+		return "jdbc/exam06";
+	}
 	
 	
 	

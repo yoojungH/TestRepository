@@ -20,7 +20,7 @@ import com.mycompany.myapp.dto.Exam12Member;
 public class Exam12DaoImpl implements Exam12Dao {
 	private static final Logger LOGGER = LoggerFactory.getLogger(Exam12DaoImpl.class);
 	////////////////////////////////////////////////////////////////////////////////////////
-	
+
 	@Override
 	public int boardInsert(Exam12Board board) {
 		int bno = -1;
@@ -131,7 +131,6 @@ public class Exam12DaoImpl implements Exam12Dao {
 		return list;
 	}
 
-	
 	public List<Exam12Board> boardSelectPage(int pageNo, int rowsPerPage) {
 		List<Exam12Board> list = new ArrayList<>();
 
@@ -149,19 +148,19 @@ public class Exam12DaoImpl implements Exam12Dao {
 
 			/* SQL문 작성 */
 			String sql = "select * ";
-			sql +="from( ";
-			sql +="  select rownum as r, bno, btitle, bwriter, bdate, bhitcount ";
-			sql +="  from( ";
-			sql +="    select bno, btitle, bwriter, bdate, bhitcount from board order by bno desc ";
-			sql +="  ) ";
-			sql +="  where rownum<=? ";
-			sql +="  ) ";
-			sql +="where r>=? ";
+			sql += "from( ";
+			sql += "  select rownum as r, bno, btitle, bwriter, bdate, bhitcount ";
+			sql += "  from( ";
+			sql += "    select bno, btitle, bwriter, bdate, bhitcount from board order by bno desc ";
+			sql += "  ) ";
+			sql += "  where rownum<=? ";
+			sql += "  ) ";
+			sql += "where r>=? ";
 
 			/* SQL문을 전송해서 실행 */
 			PreparedStatement pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, pageNo*rowsPerPage);
-			pstmt.setInt(2, (pageNo-1)*rowsPerPage+1);
+			pstmt.setInt(1, pageNo * rowsPerPage);
+			pstmt.setInt(2, (pageNo - 1) * rowsPerPage + 1);
 			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {
 				Exam12Board board = new Exam12Board();
@@ -190,7 +189,7 @@ public class Exam12DaoImpl implements Exam12Dao {
 		}
 		return list;
 	}
-	
+
 	@Override
 	public int boardCountAll() {
 		int count = 0;
@@ -231,8 +230,7 @@ public class Exam12DaoImpl implements Exam12Dao {
 		}
 		return count;
 	}
-	
-	
+
 	////////////////////////////////////////////////////////////////////////////////////////
 	@Override
 	public String memberInsert(Exam12Member member) {
@@ -291,46 +289,168 @@ public class Exam12DaoImpl implements Exam12Dao {
 		}
 		return mid;
 	}
-	
+
+	@Override
+	public List<Exam12Member> memberSelectPage(int pageNo, int rowsPerPage) {
+		List<Exam12Member> list = new ArrayList<>();
+
+		Connection conn = null;
+		try {
+			/* JDBC Driver 클래스 로딩 */
+			Class.forName("oracle.jdbc.OracleDriver");
+
+			/* 연결 문자열 작성 */
+			String url = "jdbc:oracle:thin:@localhost:1521:orcl";
+
+			/* 연결 객체 얻기 */
+			conn = DriverManager.getConnection(url, "iotuser", "iot12345");
+			LOGGER.info("연결 성공");
+
+			/* SQL문 작성 */
+			String sql = "select * ";
+			sql += "from( ";
+			sql += "  select rownum as r, mid, mname, mpassword, mdate, mtel, memail, mage, maddress ";
+			sql += "  from( ";
+			sql += "    select mid, mname, mpassword, mdate, mtel, memail, mage, maddress from member order by mid asc ";
+			sql += "  ) ";
+			sql += "  where rownum<=? ";
+			sql += "  ) ";
+			sql += "where r>=? ";
+					
+
+			
+			/* SQL문을 전송해서 실행 */
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, pageNo * rowsPerPage);
+			pstmt.setInt(2, (pageNo-1) * rowsPerPage + 1);
+			
+			ResultSet rs = pstmt.executeQuery();
+			
+			while(rs.next()){
+				Exam12Member member = new Exam12Member();
+				
+				member.setMid(rs.getString("mid"));
+				member.setMname(rs.getString("mname"));
+				member.setMpassword(rs.getString("mpassword"));
+				member.setMdate(rs.getDate("mdate"));
+				member.setMtel(rs.getString("mtel"));
+				member.setMemail(rs.getString("memail"));
+				member.setMage(rs.getInt("mage"));
+				member.setMaddress(rs.getString("maddress"));
+				
+				list.add(member);
+			}		
+			rs.close();
+			pstmt.close();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			/* 연결 끊기 */
+			try {
+				conn.close();
+			} catch (SQLException e) {
+			}
+			LOGGER.info("연결 끊김");
+		}
+		return list;
+	}
+
+	@Override
+	public int memberCountAll() {
+		int count = 0;
+		Connection conn = null;
+		try {
+			/* JDBC Driver 클래스 로딩 */
+			Class.forName("oracle.jdbc.OracleDriver");
+
+			/* 연결 문자열 작성 */
+			String url = "jdbc:oracle:thin:@localhost:1521:orcl";
+
+			/* 연결 객체 얻기 */
+			conn = DriverManager.getConnection(url, "iotuser", "iot12345");
+			LOGGER.info("연결 성공");
+
+			/* SQL문 작성 */
+			String sql = "select count(*) from member ";
+			/* SQL문을 전송해서 실행 */
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			ResultSet rs = pstmt.executeQuery();
+			rs.next();
+			count = rs.getInt(1);
+			rs.close();
+			pstmt.close();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			/* 연결 끊기 */
+			try {
+				conn.close();
+			} catch (SQLException e) {
+			}
+			LOGGER.info("연결 끊김");
+		}
+		return count;
+	}
+
 	/////////////////////////////////////////////////////////////////////////////////////////
 	public static void main(String[] args) {
-		Exam12DaoImpl test = new Exam12DaoImpl();
-		List<Exam12Board> list = test.boardSelectPage(2, 10);
-		for(Exam12Board board : list) {
-			LOGGER.info(board.getBtitle());
-		}
-		
-		
-		
+
+		/*---------------ㅡBoard----------------*/
+		/* DB에 Board 객체 100개 생성 */
 //		Exam12DaoImpl test1 = new Exam12DaoImpl();
 //		for (int i = 1; i <= 100; i++) {
 //			Exam12Board board = new Exam12Board();
-//			board.setBtitle("제목"+ i);
-//			board.setBcontent("내용"+ i);
+//			board.setBtitle("제목" + i);
+//			board.setBcontent("내용" + i);
 //			board.setBwriter("홍길동");
 //			board.setBpassword("12345");
 //			board.setBoriginalfilename("a.png");
 //			board.setBsavedfilename("a.png");
 //			board.setBfilecontent("image/png");
 //
-//			int bno = test1.insert1(board);
+//			int bno = test1.boardInsert(board);
 //			LOGGER.info("추가된 행의 bno:" + bno);
 //		}
-//
+
+		
+//		Exam12DaoImpl test = new Exam12DaoImpl();
+//		List<Exam12Board> list = test.boardSelectPage(2, 10);
+//		for (Exam12Board board : list) {
+//			LOGGER.info(board.getBtitle());
+//		}
+
+		/*---------------ㅡMember----------------*/
+		/* DB에 Member 객체 100개 생성 */
 //		Exam12DaoImpl test2 = new Exam12DaoImpl();
-//		Exam12Member member = new Exam12Member();
-//		member.setMid("아이디");
-//		member.setMname("이름");
-//		member.setMpassword("비밀번호");
-//		member.setMtel("전화번호");
-//		member.setMemail("이메일 주소");
-//		member.setMage(25);
-//		member.setMaddress("주소");
-//		member.setMoriginalfilename("a.png");
-//		member.setMsavedfilename("a.png");
-//		member.setMfilecontent("image/png");
+//		for (int i = 1; i <= 100; i++) {
+//			Exam12Member member = new Exam12Member();
+//			member.setMid("아이디" + i);
+//			member.setMname("이름" + i);
+//			member.setMpassword("비밀번호" + i);
+//			member.setMtel("전화번호");
+//			member.setMemail("이메일 주소");
+//			member.setMage(25);
+//			member.setMaddress("주소");
+//			member.setMoriginalfilename("a.png");
+//			member.setMsavedfilename("a.png");
+//			member.setMfilecontent("image/png");
 //
-//		String mid = test2.insert2(member);
-//		LOGGER.info("추가된 행의 mid:" + mid);
+//			String mid = test2.memberInsert(member);
+//			LOGGER.info("추가된 행의 mid:" + mid);
+//		}
+		
+		Exam12DaoImpl test2 = new Exam12DaoImpl();
+		List<Exam12Member> list = test2.memberSelectPage(2, 5);
+		for(Exam12Member member : list) {
+			LOGGER.info(member.getMid());
+		}
+		
+		
 	}
 }

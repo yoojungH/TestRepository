@@ -11,6 +11,7 @@ import com.mycompany.myapp.dto.Exam12Member;
 
 @Component
 public class Exam12ServiceImpl implements Exam12Service {
+	/*-------------------Board-------------------*/
 	@Autowired
 	private Exam12Dao dao;
 	
@@ -39,11 +40,24 @@ public class Exam12ServiceImpl implements Exam12Service {
 	
 	
 	
-	
+	/*-------------------Member-------------------*/
 	@Override
 	public void memberJoin(Exam12Member member) {
 		dao.memberInsert(member);
 	}
+	
+	@Override
+	public List<Exam12Member> memberListPage(int pageNo, int rowsPerPage) {
+		List<Exam12Member> list = dao.memberSelectPage(pageNo, rowsPerPage);
+		return list;
+	}
+	
+	@Override
+	public int memberTotalRows() {
+		int totalRows = dao.memberCountAll();
+		return totalRows;
+	}
+	
 	
 
 }
