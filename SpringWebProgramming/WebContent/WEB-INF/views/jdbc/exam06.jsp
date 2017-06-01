@@ -35,7 +35,7 @@
 		<c:forEach var="m" items="${list}">
 			<tr>
 				<td>${m.mid}</td>
-				<td>${m.mname}</td>
+				<td><a href="exam06Detail?mid=${m.mid}">${m.mname}</a></td>
 				<td>${m.mpassword}</td>
 				<td>${m.mtel}</td>
 				<td>${m.memail}</td>
@@ -48,7 +48,7 @@
 	<div style="margin-top: 20px; width: 700px; text-align: center;">
 		<a href="exam06?pageNo=1">[처음]</a>
 		<c:if test="${groupNo>1}">
-			<a href="exam05?pageNo=${startPageNo-1}">[이전]</a>
+			<a href="exam06?pageNo=${startPageNo-1}">[이전]</a>
 		</c:if>
 	<c:forEach var="i" begin="${startPageNo}" end="${endPageNo}">
 		&nbsp;

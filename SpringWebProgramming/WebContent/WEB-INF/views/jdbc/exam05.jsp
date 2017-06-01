@@ -33,7 +33,7 @@
 		<c:forEach var="b" items="${list}">
 			<tr>
 				<td>${b.bno}</td>
-				<td>${b.btitle}</td>
+				<td><a href="exam05Detail?bno=${b.bno}">${b.btitle}</a></td>
 				<td>${b.bwriter}</td>
 				<td>${b.bdate}</td>
 				<td>${b.bhitcount}</td>
@@ -46,9 +46,10 @@
 		<c:if test="${groupNo>1}">
 			<a href="exam05?pageNo=${startPageNo-1}">[이전]</a>
 		</c:if>
-	<c:forEach var="i" begin="${startPageNo}" end="${endPageNo}">
+		<c:forEach var="i" begin="${startPageNo}" end="${endPageNo}">
 		&nbsp;
-		 <a href="exam05?pageNo=${i}" <c:if test="${pageNo==i}"> style="font-weight:bold; color:red;" </c:if>  >${i}</a>
+		 <a href="exam05?pageNo=${i}"
+				<c:if test="${pageNo==i}"> style="font-weight:bold; color:red;" </c:if>>${i}</a>
 		&nbsp;
 	</c:forEach>
 		<c:if test="${groupNo<totalGroupNo}">
@@ -57,5 +58,9 @@
 		<a href="exam05?pageNo=${totalPageNo}">[맨끝]</a>
 	</div>
 
+
+	<div style="margin-top: 20px; width: 700px; text-align: right;">
+		<a href="exam02" class="btn btn-success">글쓰기</a>
+	</div>
 </body>
 </html>
