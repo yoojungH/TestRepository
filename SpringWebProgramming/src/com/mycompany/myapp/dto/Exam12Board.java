@@ -7,6 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class Exam12Board {
 	private int bno;
 	private String btitle;
+	private String bimage;
 	private String bcontent;
 	private String bwriter;
 	private Date bdate;
@@ -104,6 +105,14 @@ public class Exam12Board {
 
 	public void setBattach(MultipartFile battach) {
 		this.battach = battach;
+	}
+
+	public String getBimage() {
+		return bimage;
+	}
+
+	public void setBimage(String bimage) {
+		this.bimage = bimage;
 	}
 
 }

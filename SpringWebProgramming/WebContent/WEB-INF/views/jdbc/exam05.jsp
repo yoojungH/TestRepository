@@ -26,6 +26,7 @@
 		<tr class="success">
 			<td>번호</td>
 			<td>제목</td>
+			<td>사진</td>
 			<td>글쓴이</td>
 			<td>날짜</td>
 			<td>조회수</td>
@@ -34,6 +35,7 @@
 			<tr>
 				<td>${b.bno}</td>
 				<td><a href="exam05Detail?bno=${b.bno}">${b.btitle}</a></td>
+				<td><a href="exam05Detail?bno=${b.bno}">${b.bimage}</a></td>
 				<td>${b.bwriter}</td>
 				<td>${b.bdate}</td>
 				<td>${b.bhitcount}</td>

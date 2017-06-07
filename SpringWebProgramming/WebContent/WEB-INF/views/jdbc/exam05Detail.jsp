@@ -24,25 +24,28 @@
 <script type="text/javascript">
 	function handleBtnUpdate() {
 		var bpassword = $("#bpassword").val();
-		if(bpassword == "") {
-			$("#bpassword").attr("placeholder","비밀번호를 입력하셔야 합니다.");
+		if (bpassword == "") {
+			$("#bpassword").attr("placeholder", "비밀번호를 입력하셔야 합니다.");
 			$("#bpassword").css("border-color", "red");
 			return;
 		}
 		$.ajax({
-			url: "exam05CheckBpassword",
-			method: "post",
+			url : "exam05CheckBpassword",
+			method : "post",
 			//data: "bno=${board.bno}&bpassword="+bpassword
-			data: {"bno":"${board.bno}", "bpassword":bpassword},
-			success: function(data) {
-				if(data.result== "success") {
+			data : {
+				"bno" : "${board.bno}",
+				"bpassword" : bpassword
+			},
+			success : function(data) {
+				if (data.result == "success") {
 					console.log("성공 ");
-					
+
 					//서버에서 응답이 와야함 - Json 형태의 {"result":"success"}
-					location.href="exam05Update?bno=${board.bno}";	
-				}else {
+					location.href = "exam05Update?bno=${board.bno}";
+				} else {
 					$("#bpassword").val("");
-					$("#bpassword").attr("placeholder","비밀번호가 다릅니다.");
+					$("#bpassword").attr("placeholder", "비밀번호가 다릅니다.");
 					$("#bpassword").css("border-color", "red");
 				}
 			}
@@ -51,24 +54,27 @@
 
 	function handleBtnDelete() {
 		var bpassword = $("#bpassword").val();
-		if(bpassword == "") {
-			$("#bpassword").attr("placeholder","비밀번호를 입력하셔야 합니다.");
+		if (bpassword == "") {
+			$("#bpassword").attr("placeholder", "비밀번호를 입력하셔야 합니다.");
 			$("#bpassword").css("border-color", "red");
 			return;
 		}
 		$.ajax({
-			url: "exam05CheckBpassword",
-			method: "post",
+			url : "exam05CheckBpassword",
+			method : "post",
 			//data: "bno=${board.bno}&bpassword="+bpassword
-			data: {"bno":"${board.bno}", "bpassword":bpassword},
-			success: function(data) {
-				if(data.result== "success") {
-								
+			data : {
+				"bno" : "${board.bno}",
+				"bpassword" : bpassword
+			},
+			success : function(data) {
+				if (data.result == "success") {
+
 					//서버에서 응답이 와야함 - Json 형태의 {"result":"success"}
-					location.href="exam05Delete?bno=${board.bno}";	
-				}else {
+					location.href = "exam05Delete?bno=${board.bno}";
+				} else {
 					$("#bpassword").val("");
-					$("#bpassword").attr("placeholder","비밀번호가 다릅니다.");
+					$("#bpassword").attr("placeholder", "비밀번호가 다릅니다.");
 					$("#bpassword").css("border-color", "red");
 				}
 			}
@@ -98,6 +104,15 @@
 					class="glyphicon glyphicon-user"> </span>
 				</span> <input type="text" class="form-control" placeholder="제목"
 					name="btitle" value="${board.btitle}" disabled />
+			</div>
+		</div>
+
+		<div class="form-group">
+			<div class="input-group">
+				<span class="input-group-addon"> <span
+					class="glyphicon glyphicon-leaf"> </span>
+				</span> <input type="text" class="form-control" placeholder="사진"
+					name="bimgae" value="${board.bimage}" disabled />
 			</div>
 		</div>
 
@@ -134,11 +149,11 @@
 					class="glyphicon glyphicon-leaf"></span>
 				</span>
 
-				<textarea class="form-control" rows="5" cols="30"
-					name="bcontent" disabled>${board.bcontent}</textarea>
+				<textarea class="form-control" rows="5" cols="30" name="bcontent"
+					disabled>${board.bcontent}</textarea>
 			</div>
 		</div>
-		
+
 		<div class="form-group">
 			<div class="input-group">
 				<span class="input-group-addon"> <span
@@ -151,8 +166,8 @@
 			<div class="input-group">
 				<span class="input-group-addon"> <span
 					class="glyphicon glyphicon-lock"></span>
-				</span> <input id="bpassword" type="password" class="form-control" placeholder="비밀번호"
-					name="bpassword" />
+				</span> <input id="bpassword" type="password" class="form-control"
+					placeholder="비밀번호" name="bpassword" />
 			</div>
 		</div>
 

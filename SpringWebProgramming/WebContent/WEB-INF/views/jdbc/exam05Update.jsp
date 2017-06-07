@@ -47,6 +47,15 @@
 					name="btitle" value="${board.btitle}" />
 			</div>
 		</div>
+		
+		<div class="form-group">
+			<div class="input-group">
+				<span class="input-group-addon"> <span
+					class="glyphicon glyphicon-user"></span>
+				</span> <input type="text" class="form-control" placeholder="제목"
+					name="bimage" value="${board.bimage}" />
+			</div>
+		</div>
 
 		<div class="form-group">
 			<div class="input-group">

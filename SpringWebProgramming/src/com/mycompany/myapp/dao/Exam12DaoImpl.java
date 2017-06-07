@@ -38,9 +38,9 @@ public class Exam12DaoImpl implements Exam12Dao {
 
 			/* SQL문 작성 */
 			String sql = "insert into board ";
-			sql += "(bno, btitle, bcontent, bwriter, bdate, bpassword, bhitcount, boriginalfilename, bsavedfilename, bfilecontent) ";
+			sql += "(bno, btitle, bimage, bcontent, bwriter, bdate, bpassword, bhitcount, boriginalfilename, bsavedfilename, bfilecontent) ";
 			sql += "values ";
-			sql += "(board_bno_seq.nextval, ?, ?, ?, sysdate, ?, 0, ?, ?, ?)";
+			sql += "(board_bno_seq.nextval, ?, ?, ?, ?, sysdate, ?, 0, ?, ?, ?)";
 
 			/* SQL문을 전송해서 실행 */
 			/* 테이블 정의시 칼럼의 속성으로 자동 증가를 지정할 수 있는 DB일 경우(MySQL, MS SQL) */
@@ -49,12 +49,13 @@ public class Exam12DaoImpl implements Exam12Dao {
 			/* 오라클일 경우 Sequence 외부 객체로 자동 증가값을 얻기 때문에 다음과 같이 지정 */
 			PreparedStatement pstmt = conn.prepareStatement(sql, new String[] { "bno" });
 			pstmt.setString(1, board.getBtitle());
-			pstmt.setString(2, board.getBcontent());
-			pstmt.setString(3, board.getBwriter());
-			pstmt.setString(4, board.getBpassword());
-			pstmt.setString(5, board.getBoriginalfilename());
-			pstmt.setString(6, board.getBsavedfilename());
-			pstmt.setString(7, board.getBfilecontent());
+			pstmt.setString(2, board.getBimage());
+			pstmt.setString(3, board.getBcontent());
+			pstmt.setString(4, board.getBwriter());
+			pstmt.setString(5, board.getBpassword());
+			pstmt.setString(6, board.getBoriginalfilename());
+			pstmt.setString(7, board.getBsavedfilename());
+			pstmt.setString(8, board.getBfilecontent());
 			pstmt.executeUpdate();
 
 			ResultSet rs = pstmt.getGeneratedKeys();
@@ -96,7 +97,7 @@ public class Exam12DaoImpl implements Exam12Dao {
 			LOGGER.info("연결 성공");
 
 			/* SQL문 작성 */
-			String sql = "select bno, btitle, bwriter, bdate, bhitcount ";
+			String sql = "select bno, btitle, bimage, bwriter, bdate, bhitcount ";
 			sql += "from board ";
 			sql += "order by bno desc ";
 
@@ -108,6 +109,7 @@ public class Exam12DaoImpl implements Exam12Dao {
 
 				board.setBno(rs.getInt("bno")); // rs.getInt(1);
 				board.setBtitle(rs.getString("btitle")); // rs.getString(2);
+				board.setBimage(rs.getString("bimage"));
 				board.setBwriter(rs.getString("bwriter")); // rs.getString(3);
 				board.setBdate(rs.getDate("bdate")); // rs.getDate(4);
 				board.setBhitcount(rs.getInt("bhitcount")); // rs.getInt(5);
@@ -149,9 +151,9 @@ public class Exam12DaoImpl implements Exam12Dao {
 			/* SQL문 작성 */
 			String sql = "select * ";
 			sql += "from( ";
-			sql += "  select rownum as r, bno, btitle, bwriter, bdate, bhitcount ";
+			sql += "  select rownum as r, bno, btitle, bimage, bwriter, bdate, bhitcount ";
 			sql += "  from( ";
-			sql += "    select bno, btitle, bwriter, bdate, bhitcount from board order by bno desc ";
+			sql += "    select bno, btitle, bimage, bwriter, bdate, bhitcount from board order by bno desc ";
 			sql += "  ) ";
 			sql += "  where rownum<=? ";
 			sql += "  ) ";
@@ -167,6 +169,7 @@ public class Exam12DaoImpl implements Exam12Dao {
 
 				board.setBno(rs.getInt("bno")); // rs.getInt(1);
 				board.setBtitle(rs.getString("btitle")); // rs.getString(2);
+				board.setBimage(rs.getString("bimage"));
 				board.setBwriter(rs.getString("bwriter")); // rs.getString(3);
 				board.setBdate(rs.getDate("bdate")); // rs.getDate(4);
 				board.setBhitcount(rs.getInt("bhitcount")); // rs.getInt(5);
@@ -257,6 +260,7 @@ public class Exam12DaoImpl implements Exam12Dao {
 				board = new Exam12Board();
 				board.setBno(rs.getInt("bno"));
 				board.setBtitle(rs.getString("btitle"));
+				board.setBimage(rs.getString("bimage"));
 				board.setBcontent(rs.getString("bcontent"));
 				board.setBwriter(rs.getString("bwriter"));
 				board.setBdate(rs.getDate("bdate"));
@@ -339,22 +343,23 @@ public class Exam12DaoImpl implements Exam12Dao {
 			/* SQL문 작성 */
 			String sql;
 			if (board.getBoriginalfilename() != null) {
-				sql = "update board set btitle=?, bcontent=?, bpassword=?, bdate=sysdate, boriginalfilename=?, bsavedfilename=?, bfilecontent=? where bno=? ";
+				sql = "update board set btitle=?, bimage=?, bcontent=?, bpassword=?, bdate=sysdate, boriginalfilename=?, bsavedfilename=?, bfilecontent=? where bno=? ";
 			} else {
-				sql = "update board set btitle=?, bcontent=?, bpassword=?, bdate=sysdate where bno=? ";
+				sql = "update board set btitle=?, bimage=?, bcontent=?, bpassword=?, bdate=sysdate where bno=? ";
 			}
 			/* SQL문을 전송해서 실행 */
 			PreparedStatement pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, board.getBtitle());
-			pstmt.setString(2, board.getBcontent());
-			pstmt.setString(3, board.getBpassword());
+			pstmt.setString(2, board.getBimage());
+			pstmt.setString(3, board.getBcontent());
+			pstmt.setString(4, board.getBpassword());
 			if (board.getBoriginalfilename() != null) {
-				pstmt.setString(4, board.getBoriginalfilename());
-				pstmt.setString(5, board.getBsavedfilename());
-				pstmt.setString(6, board.getBfilecontent());
-				pstmt.setInt(7, board.getBno());
+				pstmt.setString(5, board.getBoriginalfilename());
+				pstmt.setString(6, board.getBsavedfilename());
+				pstmt.setString(7, board.getBfilecontent());
+				pstmt.setInt(8, board.getBno());
 			} else {
-				pstmt.setInt(4, board.getBno());
+				pstmt.setInt(5, board.getBno());
 			}
 			pstmt.executeUpdate();
 			pstmt.close();
@@ -728,26 +733,27 @@ public class Exam12DaoImpl implements Exam12Dao {
 
 		/*---------------ㅡBoard----------------*/
 		/* DB에 Board 객체 100개 생성 */
-		// Exam12DaoImpl test1 = new Exam12DaoImpl();
-		// for (int i = 1; i <= 100; i++) {
-		// Exam12Board board = new Exam12Board();
-		// board.setBtitle("제목" + i);
-		// board.setBcontent("내용" + i);
-		// board.setBwriter("홍길동");
-		// board.setBpassword("12345");
-		// board.setBoriginalfilename("a.png");
-		// board.setBsavedfilename("a.png");
-		// board.setBfilecontent("image/png");
-		//
-		// int bno = test1.boardInsert(board);
-		// LOGGER.info("추가된 행의 bno:" + bno);
-		// }
+//		 Exam12DaoImpl test1 = new Exam12DaoImpl();
+//		 for (int i = 1; i <= 100; i++) {
+//		 Exam12Board board = new Exam12Board();
+//		 board.setBtitle("제목" + i);
+//		 board.setBimage("WEB-INF/upload/image.png");
+//		 board.setBcontent("내용" + i);
+//		 board.setBwriter("홍길동");
+//		 board.setBpassword("12345");
+//		 board.setBoriginalfilename("a.png");
+//		 board.setBsavedfilename("a.png");
+//		 board.setBfilecontent("image/png");
+//		
+//		 int bno = test1.boardInsert(board);
+//		 LOGGER.info("추가된 행의 bno:" + bno);
+//		 }
 
-		// Exam12DaoImpl test = new Exam12DaoImpl();
-		// List<Exam12Board> list = test.boardSelectPage(2, 10);
-		// for (Exam12Board board : list) {
-		// LOGGER.info(board.getBtitle());
-		// }
+//		 Exam12DaoImpl test = new Exam12DaoImpl();
+//		 List<Exam12Board> list = test.boardSelectPage(2, 10);
+//		 for (Exam12Board board : list) {
+//		 LOGGER.info(board.getBtitle());
+//		 }
 
 		/*---------------ㅡMember----------------*/
 		/* DB에 Member 객체 100개 생성 */
@@ -769,11 +775,11 @@ public class Exam12DaoImpl implements Exam12Dao {
 //		 LOGGER.info("추가된 행의 mid:" + mid);
 //		 }
 
-		Exam12DaoImpl test2 = new Exam12DaoImpl();
-		List<Exam12Member> list = test2.memberSelectPage(2, 5);
-		for (Exam12Member member : list) {
-			LOGGER.info(member.getMid());
-		}
+//		Exam12DaoImpl test2 = new Exam12DaoImpl();
+//		List<Exam12Member> list = test2.memberSelectPage(2, 5);
+//		for (Exam12Member member : list) {
+//			LOGGER.info(member.getMid());
+//		}
 		
 		
 
