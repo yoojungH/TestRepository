@@ -17,9 +17,11 @@ public interface Exam12Dao {
 	
 	
 	public String memberInsert(Exam12Member member);
+	public List<Exam12Member> memberSelectAll();
 	public List<Exam12Member> memberSelectPage(int pageNo, int rowsPerPage);
 	public int memberCountAll();
 	public Exam12Member memberSelectByMid(String mid);
+	public void memberUpdateMhitcount(String mid, int mhitcount);
 	public void memberUpdate(Exam12Member member);
 	public void memberDelete(String mid);
 

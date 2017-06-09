@@ -6,13 +6,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
-
-import javax.sql.DataSource;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.mycompany.myapp.dto.Exam12Board;
@@ -21,9 +19,6 @@ import com.mycompany.myapp.dto.Exam12Member;
 @Component
 public class Exam12DaoImpl implements Exam12Dao {
 	private static final Logger LOGGER = LoggerFactory.getLogger(Exam12DaoImpl.class);
-	
-	@Autowired
-	private DataSource dataSource;
 
 	/*--------------------------Board------------------------------*/
 	@Override
@@ -31,23 +26,21 @@ public class Exam12DaoImpl implements Exam12Dao {
 		int bno = -1;
 		Connection conn = null;
 		try {
-//			/* JDBC Driver 클래스 로딩 */
-//			Class.forName("oracle.jdbc.OracleDriver");
-//
-//			/* 연결 문자열 작성 */
-//			String url = "jdbc:oracle:thin:@localhost:1521:orcl";
-//
-//			/* 연결 객체 얻기 */
-//			conn = DriverManager.getConnection(url, "iotuser", "iot12345");
-			
-			conn = dataSource.getConnection();
+			/* JDBC Driver 클래스 로딩 */
+			Class.forName("oracle.jdbc.OracleDriver");
+
+			/* 연결 문자열 작성 */
+			String url = "jdbc:oracle:thin:@localhost:1521:orcl";
+
+			/* 연결 객체 얻기 */
+			conn = DriverManager.getConnection(url, "iotuser", "iot12345");
 			LOGGER.info("연결 성공");
 
 			/* SQL문 작성 */
 			String sql = "insert into board ";
-			sql += "(bno, btitle, bimage, bcontent, bwriter, bdate, bpassword, bhitcount, boriginalfilename, bsavedfilename, bfilecontent) ";
+			sql += "(bno, btitle, bcontent, bwriter, bdate, bpassword, bhitcount, boriginalfilename, bsavedfilename, bfilecontent) ";
 			sql += "values ";
-			sql += "(board_bno_seq.nextval, ?, ?, ?, ?, sysdate, ?, 0, ?, ?, ?)";
+			sql += "(board_bno_seq.nextval, ?, ?, ?, sysdate, ?, 0, ?, ?, ?)";
 
 			/* SQL문을 전송해서 실행 */
 			/* 테이블 정의시 칼럼의 속성으로 자동 증가를 지정할 수 있는 DB일 경우(MySQL, MS SQL) */
@@ -56,13 +49,12 @@ public class Exam12DaoImpl implements Exam12Dao {
 			/* 오라클일 경우 Sequence 외부 객체로 자동 증가값을 얻기 때문에 다음과 같이 지정 */
 			PreparedStatement pstmt = conn.prepareStatement(sql, new String[] { "bno" });
 			pstmt.setString(1, board.getBtitle());
-			pstmt.setString(2, board.getBimage());
-			pstmt.setString(3, board.getBcontent());
-			pstmt.setString(4, board.getBwriter());
-			pstmt.setString(5, board.getBpassword());
-			pstmt.setString(6, board.getBoriginalfilename());
-			pstmt.setString(7, board.getBsavedfilename());
-			pstmt.setString(8, board.getBfilecontent());
+			pstmt.setString(2, board.getBcontent());
+			pstmt.setString(3, board.getBwriter());
+			pstmt.setString(4, board.getBpassword());
+			pstmt.setString(5, board.getBoriginalfilename());
+			pstmt.setString(6, board.getBsavedfilename());
+			pstmt.setString(7, board.getBfilecontent());
 			pstmt.executeUpdate();
 
 			ResultSet rs = pstmt.getGeneratedKeys();
@@ -72,8 +64,8 @@ public class Exam12DaoImpl implements Exam12Dao {
 			pstmt.close();
 			LOGGER.info("행 추가 성공");
 
-//		} catch (ClassNotFoundException e) {
-//			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -104,7 +96,7 @@ public class Exam12DaoImpl implements Exam12Dao {
 			LOGGER.info("연결 성공");
 
 			/* SQL문 작성 */
-			String sql = "select bno, btitle, bimage, bwriter, bdate, bhitcount ";
+			String sql = "select bno, btitle, bwriter, bdate, bhitcount ";
 			sql += "from board ";
 			sql += "order by bno desc ";
 
@@ -116,7 +108,6 @@ public class Exam12DaoImpl implements Exam12Dao {
 
 				board.setBno(rs.getInt("bno")); // rs.getInt(1);
 				board.setBtitle(rs.getString("btitle")); // rs.getString(2);
-				board.setBimage(rs.getString("bimage"));
 				board.setBwriter(rs.getString("bwriter")); // rs.getString(3);
 				board.setBdate(rs.getDate("bdate")); // rs.getDate(4);
 				board.setBhitcount(rs.getInt("bhitcount")); // rs.getInt(5);
@@ -158,9 +149,9 @@ public class Exam12DaoImpl implements Exam12Dao {
 			/* SQL문 작성 */
 			String sql = "select * ";
 			sql += "from( ";
-			sql += "  select rownum as r, bno, btitle, bimage, bwriter, bdate, bhitcount ";
+			sql += "  select rownum as r, bno, btitle, bwriter, bdate, bhitcount ";
 			sql += "  from( ";
-			sql += "    select bno, btitle, bimage, bwriter, bdate, bhitcount from board order by bno desc ";
+			sql += "    select bno, btitle, bwriter, bdate, bhitcount from board order by bno desc ";
 			sql += "  ) ";
 			sql += "  where rownum<=? ";
 			sql += "  ) ";
@@ -176,7 +167,6 @@ public class Exam12DaoImpl implements Exam12Dao {
 
 				board.setBno(rs.getInt("bno")); // rs.getInt(1);
 				board.setBtitle(rs.getString("btitle")); // rs.getString(2);
-				board.setBimage(rs.getString("bimage"));
 				board.setBwriter(rs.getString("bwriter")); // rs.getString(3);
 				board.setBdate(rs.getDate("bdate")); // rs.getDate(4);
 				board.setBhitcount(rs.getInt("bhitcount")); // rs.getInt(5);
@@ -267,7 +257,6 @@ public class Exam12DaoImpl implements Exam12Dao {
 				board = new Exam12Board();
 				board.setBno(rs.getInt("bno"));
 				board.setBtitle(rs.getString("btitle"));
-				board.setBimage(rs.getString("bimage"));
 				board.setBcontent(rs.getString("bcontent"));
 				board.setBwriter(rs.getString("bwriter"));
 				board.setBdate(rs.getDate("bdate"));
@@ -350,23 +339,22 @@ public class Exam12DaoImpl implements Exam12Dao {
 			/* SQL문 작성 */
 			String sql;
 			if (board.getBoriginalfilename() != null) {
-				sql = "update board set btitle=?, bimage=?, bcontent=?, bpassword=?, bdate=sysdate, boriginalfilename=?, bsavedfilename=?, bfilecontent=? where bno=? ";
+				sql = "update board set btitle=?, bcontent=?, bpassword=?, bdate=sysdate, boriginalfilename=?, bsavedfilename=?, bfilecontent=? where bno=? ";
 			} else {
-				sql = "update board set btitle=?, bimage=?, bcontent=?, bpassword=?, bdate=sysdate where bno=? ";
+				sql = "update board set btitle=?, bcontent=?, bpassword=?, bdate=sysdate where bno=? ";
 			}
 			/* SQL문을 전송해서 실행 */
 			PreparedStatement pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, board.getBtitle());
-			pstmt.setString(2, board.getBimage());
-			pstmt.setString(3, board.getBcontent());
-			pstmt.setString(4, board.getBpassword());
+			pstmt.setString(2, board.getBcontent());
+			pstmt.setString(3, board.getBpassword());
 			if (board.getBoriginalfilename() != null) {
-				pstmt.setString(5, board.getBoriginalfilename());
-				pstmt.setString(6, board.getBsavedfilename());
-				pstmt.setString(7, board.getBfilecontent());
-				pstmt.setInt(8, board.getBno());
+				pstmt.setString(4, board.getBoriginalfilename());
+				pstmt.setString(5, board.getBsavedfilename());
+				pstmt.setString(6, board.getBfilecontent());
+				pstmt.setInt(7, board.getBno());
 			} else {
-				pstmt.setInt(5, board.getBno());
+				pstmt.setInt(4, board.getBno());
 			}
 			pstmt.executeUpdate();
 			pstmt.close();
@@ -460,9 +448,7 @@ public class Exam12DaoImpl implements Exam12Dao {
 			pstmt.setString(10, member.getMfilecontent());
 			pstmt.executeUpdate();
 
-			ResultSet rs = pstmt.getGeneratedKeys();
-			rs.next();
-			mid = rs.getString(1);
+			mid = member.getMid();
 			pstmt.close();
 			LOGGER.info("행 추가 성공");
 
@@ -482,6 +468,60 @@ public class Exam12DaoImpl implements Exam12Dao {
 		return mid;
 	}
 
+	
+	public List<Exam12Member> memberSelectAll() {
+		List<Exam12Member> list = new ArrayList<>();
+
+		Connection conn = null;
+		try {
+			/* JDBC Driver 클래스 로딩 */
+			Class.forName("oracle.jdbc.OracleDriver");
+
+			/* 연결 문자열 작성 */
+			String url = "jdbc:oracle:thin:@localhost:1521:orcl";
+
+			/* 연결 객체 얻기 */
+			conn = DriverManager.getConnection(url, "iotuser", "iot12345");
+			LOGGER.info("연결 성공");
+
+			/* SQL문 작성 */
+			String sql = "select mid, mname, mpassword, mdate, mtel, memail, mage, maddress, moriginalfilename, msavedfilename, mfilecontent ";
+			sql += "from member ";
+			sql += "order by bno asc ";
+
+			/* SQL문을 전송해서 실행 */
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			ResultSet rs = pstmt.executeQuery();
+			while (rs.next()) {
+				Exam12Member member = new Exam12Member();
+
+				member.setMid(rs.getString("mid"));
+				member.setMname(rs.getString("mname"));
+				member.setMpassword(rs.getString("mpassword"));
+				member.setMdate(rs.getDate("mdate"));
+				member.setMtel(rs.getString("mtel"));
+				member.setMemail(rs.getString("memail"));
+				member.setMage(rs.getInt("mage"));
+				member.setMaddress(rs.getString("maddress"));
+				list.add(member);
+			}
+			rs.close();
+			pstmt.close();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			/* 연결 끊기 */
+			try {
+				conn.close();
+			} catch (SQLException e) {
+			}
+			LOGGER.info("연결 끊김");
+		}
+		return list;
+	}
 	@Override
 	public List<Exam12Member> memberSelectPage(int pageNo, int rowsPerPage) {
 		List<Exam12Member> list = new ArrayList<>();
@@ -642,6 +682,45 @@ public class Exam12DaoImpl implements Exam12Dao {
 		return member;
 	}
 
+	
+	@Override
+	public void memberUpdateMhitcount(String mid, int mhitcount) {
+		Connection conn = null;
+		try {
+			/* JDBC Driver 클래스 로딩 */
+			Class.forName("oracle.jdbc.OracleDriver");
+
+			/* 연결 문자열 작성 */
+			String url = "jdbc:oracle:thin:@localhost:1521:orcl";
+
+			/* 연결 객체 얻기 */
+			conn = DriverManager.getConnection(url, "iotuser", "iot12345");
+			LOGGER.info("연결 성공");
+
+			/* SQL문 작성 */
+			String sql = "update board set bhitcount=? where bno=? ";
+
+			/* SQL문을 전송해서 실행 */
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, mhitcount);
+			pstmt.setString(2, mid);
+			pstmt.executeUpdate();
+			pstmt.close();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			/* 연결 끊기 */
+			try {
+				conn.close();
+			} catch (SQLException e) {
+			}
+			LOGGER.info("연결 끊김");
+		}
+	}
+	
 	@Override
 	public void memberUpdate(Exam12Member member) {
 		Connection conn = null;
@@ -732,9 +811,6 @@ public class Exam12DaoImpl implements Exam12Dao {
 		}
 	}
 
-
-
-	
 	/////////////////////////////////////////////////////////////////////////////////////////
 	public static void main(String[] args) {
 
@@ -744,7 +820,6 @@ public class Exam12DaoImpl implements Exam12Dao {
 //		 for (int i = 1; i <= 100; i++) {
 //		 Exam12Board board = new Exam12Board();
 //		 board.setBtitle("제목" + i);
-//		 board.setBimage("WEB-INF/upload/image.png");
 //		 board.setBcontent("내용" + i);
 //		 board.setBwriter("홍길동");
 //		 board.setBpassword("12345");
@@ -764,23 +839,23 @@ public class Exam12DaoImpl implements Exam12Dao {
 
 		/*---------------ㅡMember----------------*/
 		/* DB에 Member 객체 100개 생성 */
-//		 Exam12DaoImpl test2 = new Exam12DaoImpl();
-//		 for (int i = 1; i <= 100; i++) {
-//		 Exam12Member member = new Exam12Member();
-//		 member.setMid("lily" + i);
-//		 member.setMname("유정");
-//		 member.setMpassword("0000");
-//		 member.setMtel("010-1234-5678");
-//		 member.setMemail("hello@world.com");
-//		 member.setMage(25);
-//		 member.setMaddress("한국");
-//		 member.setMoriginalfilename("a.png");
-//		 member.setMsavedfilename("a.png");
-//		 member.setMfilecontent("image/png");
-//		
-//		 String mid = test2.memberInsert(member);
-//		 LOGGER.info("추가된 행의 mid:" + mid);
-//		 }
+		 Exam12DaoImpl test2 = new Exam12DaoImpl();
+		 for (int i = 1; i <= 100; i++) {
+		 Exam12Member member = new Exam12Member();
+		 member.setMid("lily" + i);
+		 member.setMname("유정");
+		 member.setMpassword("0000");
+		 member.setMtel("010-1234-5678");
+		 member.setMemail("hello@world.com");
+		 member.setMage(25);
+		 member.setMaddress("한국");
+		 member.setMoriginalfilename("a.png");
+		 member.setMsavedfilename("a.png");
+		 member.setMfilecontent("image/png");
+		
+		 String mid = test2.memberInsert(member);
+		 LOGGER.info("추가된 행의 mid:" + mid);
+		 }
 
 //		Exam12DaoImpl test2 = new Exam12DaoImpl();
 //		List<Exam12Member> list = test2.memberSelectPage(2, 5);

@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.Date;
 import java.util.List;
 
+import javax.annotation.Resource;
 import javax.servlet.ServletContext;
 
 import org.slf4j.Logger;
@@ -23,7 +24,8 @@ import com.mycompany.myapp.service.Exam12Service;
 @Controller
 public class Exam12JdbcController {
 	private static final Logger LOGGER = LoggerFactory.getLogger(Exam12JdbcController.class);
-	@Autowired
+	
+	@Resource(name="exam12ServiceImpl2")
 	private Exam12Service service;
 
 	@Autowired
@@ -240,8 +242,8 @@ public class Exam12JdbcController {
 	}
 	
 	@RequestMapping("/jdbc/exam06CheckMpassword")
-	public String exam06CheckMpassword(String mid, String bpassword, Model model) {
-		String result = service.memberCheckMpassword(mid, bpassword);
+	public String exam06CheckMpassword(String mid, String mpassword, Model model) {
+		String result = service.memberCheckMpassword(mid, mpassword);
 		model.addAttribute("result", result);
 		return "jdbc/exam06CheckMpassword";
 	}
