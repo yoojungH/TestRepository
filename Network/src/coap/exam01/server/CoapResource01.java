@@ -24,7 +24,7 @@ public class CoapResource01 extends CoapResource {
 	public void handleGET(CoapExchange exchange) {
 		try {
 			double value = thermistorSensor.getValue();
-			exchange.respond("온도: 섭씨" + value + "도");
+			exchange.respond("온도: 섭씨 " + value + "도");
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
