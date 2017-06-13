@@ -59,7 +59,6 @@ public class CoapResource02 extends CoapResource {
 		JSONObject jsonObject = new JSONObject(json);
 		String kind = jsonObject.getString("kind");
 		int angle = jsonObject.getInt("angle");
-
 		if(kind.equals("ultrasonicsensor")) {
 			//servoMotor.setAngle(Integer.parseInt(angle));
 			servoMotor.setAngle(angle);
