@@ -24,22 +24,25 @@
 <script type="text/javascript">
 	function handleBtnUpdate() {
 		var mpassword = $("#mpassword").val();
-		if(mpassword == "") {
-			$("#mpassword").attr("placeholder","비밀번호를 입력하셔야 합니다.");
+		if (mpassword == "") {
+			$("#mpassword").attr("placeholder", "비밀번호를 입력하셔야 합니다.");
 			$("#mpassword").css("border-color", "red");
 			return;
 		}
 		$.ajax({
-			url: "exam06CheckMpassword",
-			method: "post",
-			data: {"mid":"${member.mid}", "mpassword":mpassword},
-			success: function(data) {
-				if(data.result== "success") {
+			url : "exam06CheckMpassword",
+			method : "post",
+			data : {
+				"mid" : "${member.mid}",
+				"mpassword" : mpassword
+			},
+			success : function(data) {
+				if (data.result == "success") {
 					//서버에서 응답이 와야함 - Json 형태의 {"result":"success"}
-					location.href="exam06Update?mid=${member.mid}";	
-				}else {
+					location.href = "exam06Update?mid=${member.mid}";
+				} else {
 					$("#mpassword").val("");
-					$("#mpassword").attr("placeholder","비밀번호가 다릅니다.");
+					$("#mpassword").attr("placeholder", "비밀번호가 다릅니다.");
 					$("#mpassword").css("border-color", "red");
 				}
 			}
@@ -48,22 +51,25 @@
 
 	function handleBtnDelete() {
 		var mpassword = $("#mpassword").val();
-		if(mpassword == "") {
-			$("#mpassword").attr("placeholder","비밀번호를 입력하셔야 합니다.");
+		if (mpassword == "") {
+			$("#mpassword").attr("placeholder", "비밀번호를 입력하셔야 합니다.");
 			$("#mpassword").css("border-color", "red");
 			return;
 		}
 		$.ajax({
-			url: "exam06CheckMpassword",
-			method: "post",
-			data: {"mid":"${member.mid}", "mpassword":mpassword},
-			success: function(data) {
-				if(data.result== "success") {			
+			url : "exam06CheckMpassword",
+			method : "post",
+			data : {
+				"mid" : "${member.mid}",
+				"mpassword" : mpassword
+			},
+			success : function(data) {
+				if (data.result == "success") {
 					//서버에서 응답이 와야함 - Json 형태의 {"result":"success"}
-					location.href="exam06Delete?mid=${member.mid}";	
-				}else {
+					location.href = "exam06Delete?mid=${member.mid}";
+				} else {
 					$("#mpassword").val("");
-					$("#mpassword").attr("placeholder","비밀번호가 다릅니다.");
+					$("#mpassword").attr("placeholder", "비밀번호가 다릅니다.");
 					$("#mpassword").css("border-color", "red");
 				}
 			}
@@ -140,6 +146,7 @@
 					name="maddress" value="${member.maddress}" disabled />
 			</div>
 		</div>
+
 
 		<div class="form-group">
 			<div class="input-group">

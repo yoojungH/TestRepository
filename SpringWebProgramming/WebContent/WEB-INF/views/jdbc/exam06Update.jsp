@@ -43,7 +43,7 @@
 				<span class="input-group-addon"> <span
 					class="glyphicon glyphicon-user"></span>
 				</span> <input type="text" class="form-control" placeholder="아이디"
-					name="mid" value="${member.mid}" disabled />
+					name="mid" value="${member.mid}"  />
 			</div>
 		</div>
 
@@ -52,7 +52,7 @@
 				<span class="input-group-addon"> <span
 					class="glyphicon glyphicon-user"></span>
 				</span> <input type="text" class="form-control" placeholder="이름"
-					name="mname" value="${member.mname}" disabled />
+					name="mname" value="${member.mname}"  />
 			</div>
 		</div>
 
@@ -61,7 +61,7 @@
 				<span class="input-group-addon"> <span
 					class="glyphicon glyphicon-leaf"></span>
 				</span> <input type="text" class="form-control" placeholder="전화번호"
-					name="mtel" value="${member.mtel}" disabled />
+					name="mtel" value="${member.mtel}"  />
 			</div>
 		</div>
 
@@ -70,7 +70,7 @@
 				<span class="input-group-addon"> <span
 					class="glyphicon glyphicon-leaf"></span>
 				</span> <input type="date" class="form-control" placeholder="회원가입 날짜"
-					name="bdate" value="${member.mdate}" disabled />
+					name="bdate" value="${member.mdate}"  />
 			</div>
 		</div>
 
@@ -97,7 +97,7 @@
 				<span class="input-group-addon"> <span
 					class="glyphicon glyphicon-tag"></span>
 				</span> <input type="text" class="form-control" placeholder="주소"
-					name="maddress" value="${member.maddress}" disabled />
+					name="maddress" value="${member.maddress}" disabled  />
 			</div>
 		</div>
 

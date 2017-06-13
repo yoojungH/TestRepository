@@ -73,7 +73,7 @@
 
 	<update id="update" parameterType="com.mycompany.myapp.dto.Exam12Board">
 	<if test="boriginalfilename != null">
-		update board set btitle=#btitle}, bcontent=#{bcontent}, bpassword=#{bpassword}, bdate=sysdate,
+		update board set btitle=#{btitle}, bcontent=#{bcontent}, bpassword=#{bpassword}, bdate=sysdate,
 		boriginalfilename=#{boriginalfilename}, bsavedfilename=#{bsavedfilename}, bfilecontent=#{bfilecontent} where
 		bno=#{bno}
 	</if>

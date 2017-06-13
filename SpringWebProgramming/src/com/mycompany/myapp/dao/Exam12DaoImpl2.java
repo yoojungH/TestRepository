@@ -315,14 +315,13 @@ public class Exam12DaoImpl2 implements Exam12Dao {
 		/* SQL문 작성 */
 		String sql;
 		if (member.getMoriginalfilename() != null) {
-			sql = "update member set mname=?, mtel=?, mpassword=?, mdate=sysdate, memail=?, maddress=?, "
-					+ "moriginalfilename=?, msavedfilename=?, mfilecontent=? where mid=? ";
-			jdbcTemplate.update(sql, member.getMname(), member.getMtel(), member.getMpassword(), member.getMemail(), member.getMaddress(),
+			sql = "update member set mname=?, mtel=?, mpassword=?, mdate=sysdate, moriginalfilename=?, msavedfilename=?, mfilecontent=? where mid=? ";
+			jdbcTemplate.update(sql, member.getMname(), member.getMtel(), member.getMpassword(),
 					member.getMoriginalfilename(), member.getMsavedfilename(),	member.getMfilecontent(), member.getMid());
 		
 		} else {
 			sql = "update member set mname=?, mtel=?, mpassword=?, mdate=sysdate where mid=? ";
-			jdbcTemplate.update(sql, member.getMname(), member.getMtel(), member.getMpassword(), member.getMdate(),member.getMid());
+			jdbcTemplate.update(sql, member.getMname(), member.getMtel(), member.getMpassword(), member.getMdate(), member.getMid());
 		}
 
 	}
@@ -331,59 +330,6 @@ public class Exam12DaoImpl2 implements Exam12Dao {
 		/* SQL문 작성 */
 		String sql = "delete from member where mid=? ";
 		jdbcTemplate.update(sql, mid);
-	}
-
-	/////////////////////////////////////////////////////////////////////////////////////////
-	public static void main(String[] args) {
-
-		/*---------------ㅡBoard----------------*/
-		/* DB에 Board 객체 100개 생성 */
-		// Exam12DaoImpl test1 = new Exam12DaoImpl();
-		// for (int i = 1; i <= 100; i++) {
-		// Exam12Board board = new Exam12Board();
-		// board.setBtitle("제목" + i);
-		// board.setBcontent("내용" + i);
-		// board.setBwriter("홍길동");
-		// board.setBpassword("12345");
-		// board.setBoriginalfilename("a.png");
-		// board.setBsavedfilename("a.png");
-		// board.setBfilecontent("image/png");
-		//
-		// int bno = test1.boardInsert(board);
-		// LOGGER.info("추가된 행의 bno:" + bno);
-		// }
-
-		// Exam12DaoImpl test = new Exam12DaoImpl();
-		// List<Exam12Board> list = test.boardSelectPage(2, 10);
-		// for (Exam12Board board : list) {
-		// LOGGER.info(board.getBtitle());
-		// }
-
-		/*---------------ㅡMember----------------*/
-		/* DB에 Member 객체 100개 생성 */
-//		 Exam12DaoImpl test2 = new Exam12DaoImpl();
-//		 for (int i = 1; i <= 100; i++) {
-//		 Exam12Member member = new Exam12Member();
-//		 member.setMid("lily" + i);
-//		 member.setMname("유정");
-//		 member.setMpassword("0000");
-//		 member.setMtel("010-1234-5678");
-//		 member.setMemail("hello@world.com");
-//		 member.setMage(25);
-//		 member.setMaddress("한국");
-//		 member.setMoriginalfilename("a.png");
-//		 member.setMsavedfilename("a.png");
-//		 member.setMfilecontent("image/png");
-//		
-//		 String mid = test2.memberInsert(member);
-//		 LOGGER.info("추가된 행의 mid:" + mid);
-//		 }
-
-		Exam12DaoImpl test2 = new Exam12DaoImpl();
-		List<Exam12Member> list = test2.memberSelectPage(2, 5);
-		for (Exam12Member member : list) {
-			LOGGER.info(member.getMid());
-		}
 	}
 
 }
